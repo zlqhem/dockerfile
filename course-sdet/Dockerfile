@@ -15,3 +15,4 @@ RUN cd /course-data && ./install.sh
 ENV PATH /course-data/crest-0.1.2/bin:$PATH
 RUN echo $PATH
 RUN which run_crest
+RUN cd /course-sdet/day2/crest

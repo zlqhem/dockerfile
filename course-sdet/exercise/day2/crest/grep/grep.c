@@ -17,6 +17,9 @@
 
    Written July 1992 by Mike Haertel.  */
 
+#ifdef USE_CREST
+#include "crest.h"
+#endif
 /* I added a series define from makefile here in order to run cfe */
 #define GREP 1
 #define STDC_HEADERS 1
@@ -340,10 +343,19 @@ fillbuf(save)
 	  bufmapped = 0;
 	  lseek(bufdesc, bufoffset, 0);
 	}
+#ifdef USE_CREST
+      cc = fuzzread(bufdesc, buffer + bufsalloc, bufalloc - bufsalloc);
+#else
       cc = read(bufdesc, buffer + bufsalloc, bufalloc - bufsalloc);
+#endif /* USE_CREST */
     }
 #else
+#ifdef USE_CREST
+  cc = fuzzread(bufdesc, buffer + bufsalloc, bufalloc - bufsalloc);
+#else
   cc = read(bufdesc, buffer + bufsalloc, bufalloc - bufsalloc);
+#endif /* USE_CREST */
+
 #endif
   if (cc > 0)
     buflim = buffer + bufsalloc + cc;
@@ -624,6 +636,20 @@ setmatcher(name)
   return 0;
 }  
 
+#ifdef USE_CREST
+ssize_t fuzzread(int fd, char *buf, size_t count){
+	char tmp1;
+	static count = 0;
+	count++;
+	if(count <= 40) {
+		CREST_char(tmp1);
+		*buf=tmp1;
+		return 1;
+	} else {
+		return 0;
+	}
+}
+#endif
 int
 main(argc, argv)
      int argc;
@@ -632,6 +658,9 @@ main(argc, argv)
   char *keys;
   size_t keycc, oldcc, keyalloc;
   int keyfound, count_matches, no_filenames, list_files, suppress_errors;
+#ifdef USE_CREST
+  int tmp1;
+#endif
   int opt, cc, desc, count, status;
   FILE *fp;
   extern char *optarg;
@@ -790,6 +819,13 @@ main(argc, argv)
       {
 	keys = argv[optind++];
 	keycc = strlen(keys);
+#ifdef USE_CREST
+	for (int iii=0; iii<keycc; iii++) {
+		CREST_char(tmp1);
+		keys[iii]=tmp1;
+	}
+	printf("%s\n", keys);
+#endif
       }
     else
       usage();
