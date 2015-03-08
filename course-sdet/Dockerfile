@@ -4,7 +4,7 @@ MAINTAINER junhee cho <junhee.cho@lge.com>
 RUN apt-get update
 
 # Install basic packages
-RUN apt-get -y install curl git gcc g++ libc6 libc6-dev-i386 ocaml wget m4 make autoconf unzip zip
+RUN apt-get -y install curl git gcc g++ libc6 libc6-dev-i386 ocaml wget m4 make autoconf unzip zip vim
 
 # add data files
 ADD ./data /course-data
