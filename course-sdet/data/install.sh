@@ -17,4 +17,6 @@ unzip crest-v0.1.2.zip
 # step 1. build crest
 (cd crest-0.1.2/src && make)
 
+# step 2. pathc: crest/bin/crestc
+(cp crestc.patch crest-0.1.2/bin && cd crest-0.1.2/bin && patch crestc crestc.patch)
 

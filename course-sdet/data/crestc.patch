@@ -1,0 +1,4 @@
+12c12
+< ${CILLY} $1 -o ${TARGET} --save-temps --doCrestInstrument \
+---
+> ${CILLY} $@ -o ${TARGET} --save-temps --doCrestInstrument \
