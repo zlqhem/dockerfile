@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # step 0. prepare findlib
-(cd findlib-1.5.5 && ./configure && make install)
+(tar xvfz findlib-1.2.5.tar.gz && cd findlib-1.2.5 && ./configure && make install)
 
 # step 0. prepare yices smt solver
 mkdir -p /home/jburnim
